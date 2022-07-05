@@ -13,10 +13,10 @@ import numpy as np
 
 class EventSource:
     
-    def __init__():
+    def __init__(self):
         pass
     
-    def extract_sentence(df,col_name, topic, prod, num_sentence = -1):
+    def extract_sentence(self, df,col_name, topic, prod, num_sentence = -1):
         """
         Args:
             df:
@@ -46,7 +46,7 @@ class EventSource:
                 break
         
         
-    def json_serializer(x):
+    def json_serializer(self, x):
         """
         Args:
             x:
@@ -58,7 +58,8 @@ class EventSource:
 
         return val
 
-    def json_deserializer(x):
+    
+    def json_deserializer(self, x):
         """
         Args:
             x:
@@ -71,7 +72,7 @@ class EventSource:
         return val
     
     
-    def producer_init(server, serializer=None):
+    def producer_init(self, server, serializer=None):
         """
         Args:
             server:
@@ -85,7 +86,7 @@ class EventSource:
         return producer
          
         
-    def consumer_init(topic, server, offset, commit, group, deser):
+    def consumer_init(self, topic, server, offset, commit, group, deser):
         """
         Args:
             topic:
@@ -108,7 +109,18 @@ class EventSource:
         return consumer
 
 
-    def create_topic(server, cl_id, topic_name, partitions, replica):
+    def create_topic(self, server, cl_id, topic_name, partitions, replica):
+        """
+        Args:
+            server:
+            cl_id:
+            topic_name:
+            partitions:
+            replica:
+            
+        Returns:
+            message.
+        """
         admin_client = KafkaAdminClient(
             bootstrap_servers=server, 
             client_id=cl_id
@@ -118,4 +130,6 @@ class EventSource:
         topic_list.append(NewTopic(name=topic_name, num_partitions=partitions, 
                                     replication_factor=replica))
 
-        return admin_client.create_topics(new_topics=topic_list, validate_only=False)
+        message = admin_client.create_topics(new_topics=topic_list, validate_only=False)
+        
+        return message
