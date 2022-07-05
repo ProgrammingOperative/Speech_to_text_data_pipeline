@@ -1,6 +1,8 @@
 from kafka import KafkaProducer
+from kafka import KafkaConsumer
 from datetime import datetime
 from json import dumps
+from json import loads   
 from time import sleep
 from kafka import KafkaConsumer
 from json import loads
@@ -39,13 +41,29 @@ class EventSource:
 
         return val
 
+    def json_deserializer(x):
+        val = loads(x.decode('utf-8'))
+        
+        return val
+    
     
     def producer_init(server, serializer=None):
         producer = KafkaProducer(bootstrap_servers=server,
                                  value_serializer=lambda x: serializer(x))
         return producer
-    
-    
+         
+        
+    def consumer_init(topic, servr, offset, commit, group, deser):
+        consumer = KafkaConsumer(topic,
+                                 bootstrap_servers=server,
+                                 auto_offset_reset=offset,
+                                 enable_auto_commit=commit,
+                                 group_id=group,
+                                 value_deserializer=lambda x: deser(x))
+
+        return consumer
+
+
     def create_topic(server, cl_id, topic_name, partitions, replica):
         admin_client = KafkaAdminClient(
             bootstrap_servers=server, 
