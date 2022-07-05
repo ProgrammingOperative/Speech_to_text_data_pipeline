@@ -1,5 +1,7 @@
 # Speech_to_text_data_pipeline
 
+<img src=""/>
+
 **Table of content**
 
 - [Overview](#overview)
