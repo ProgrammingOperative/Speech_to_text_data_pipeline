@@ -43,12 +43,10 @@ Data can be found [here](https://github.com/IsraelAbebe/An-Amharic-News-Text-cla
 
 > All the unit and integration tests are found here
 
-## Author
+## Authors
 
 👤 **Biniyam Belayneh**
 
-- GitHub: [Biniyam_Belayneh](https://github.com/benbel376)
-- LinkedIn: [Biniyam_Belayneh](https://www.linkedin.com/in/biniyam-belayneh-demisse-42909617a/)
 
 ## Show your support
 
