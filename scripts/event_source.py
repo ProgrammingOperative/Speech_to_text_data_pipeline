@@ -39,7 +39,21 @@ class EventSource:
 
         return val
 
+    
     def producer_init(server, serializer=None):
         producer = KafkaProducer(bootstrap_servers=server,
                                  value_serializer=lambda x: serializer(x))
         return producer
+    
+    
+    def create_topic(server, cl_id, topic_name, partitions, replica):
+        admin_client = KafkaAdminClient(
+            bootstrap_servers=server, 
+            client_id=cl_id
+        )
+
+        topic_list = []
+        topic_list.append(NewTopic(name=topic_name, num_partitions=partitions, 
+                                    replication_factor=replica))
+
+        return admin_client.create_topics(new_topics=topic_list, validate_only=False)
