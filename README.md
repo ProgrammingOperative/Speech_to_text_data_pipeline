@@ -1,6 +1,6 @@
 # Speech_to_text_data_pipeline
 
-<img src="https://github.com/Reiten-10Academy/Speech_to_text_data_pipeline/blob/main/images/Data_Pipeline.webp"/>
+<img src="https://github.com/Reiten-10Academy/Speech_to_text_data_pipeline/blob/main/images/ETL.jpg"/>
 
 **Table of content**
 
