@@ -16,44 +16,88 @@ class EventSource:
     def __init__():
         pass
     
-    def extract_sentence(df,col_name, topic, prod, num_sentence = -1): 
-    counter = 0
-    for i in range(len(df)):
-        articles = df.loc[i,col_name].split("።")
-        index = 0
-        size = len(articles)
-        while((counter != num_sentence) and (index < size)):
-            sentence = articles[index]
-            if(len(sentence) < 2):
+    def extract_sentence(df,col_name, topic, prod, num_sentence = -1):
+        """
+        Args:
+            df:
+            col_name:
+            topic:
+            prod:
+            num_sentence:
+            
+        Returns: None
+        """
+        counter = 0
+        for i in range(len(df)):
+            articles = df.loc[i,col_name].split("።")
+            index = 0
+            size = len(articles)
+            while((counter != num_sentence) and (index < size)):
+                sentence = articles[index]
+                if(len(sentence) < 2):
+                    counter = counter+1
+                    index = index+1
+                    continue
+                prod.send(topic, sentence)
                 counter = counter+1
                 index = index+1
-                continue
-            prod.send(topic, sentence)
-            counter = counter+1
-            index = index+1
-        
-        if(counter == num_sentence):
-            break
+
+            if(counter == num_sentence):
+                break
         
         
     def json_serializer(x):
+        """
+        Args:
+            x:
+        
+        Returns: 
+            val: 
+        """
         val = dumps(x).encode('utf-8')
 
         return val
 
     def json_deserializer(x):
+        """
+        Args:
+            x:
+            
+        Returns:
+            val: 
+        """
         val = loads(x.decode('utf-8'))
         
         return val
     
     
     def producer_init(server, serializer=None):
+        """
+        Args:
+            server:
+            serializer:
+            
+        Returns:
+            producer:
+        """
         producer = KafkaProducer(bootstrap_servers=server,
                                  value_serializer=lambda x: serializer(x))
         return producer
          
         
-    def consumer_init(topic, servr, offset, commit, group, deser):
+    def consumer_init(topic, server, offset, commit, group, deser):
+        """
+        Args:
+            topic:
+            server:
+            offset:
+            commit:
+            group:
+            deser:
+        
+        Returns:
+            consumer:
+        """
         consumer = KafkaConsumer(topic,
                                  bootstrap_servers=server,
                                  auto_offset_reset=offset,
