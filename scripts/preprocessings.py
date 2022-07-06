@@ -87,7 +87,25 @@ class DataProcessor():
         return normalized_text
 
 ## 
-  
+    def normalize_and_append_headline_to_outfile(_sentence,counter,file_name):
+        try:        
+            with open(file_name,'a+',encoding='utf8') as processed_text:
+                tokens=re.compile('\s+').split(_sentence) #word level
+                normalized_sentence=''
+                if len(tokens)<=7:
+                        print("Below minimum words in sentence")
+                else:
+                    for token in tokens:                                           
+                        normalized_token=DataProcessor.normalize_char_level_missmatch(token)
+                        processed=DataProcessor.remove_punc_and_special_chars(normalized_token)                 
+                        normalized_sentence+=processed+' ' ##merge normalized tokens to a sentence
+                    processed_text.write(normalized_sentence+"(sentence "+str(counter)+")"+'\n') #append normalized sentence to a file
+                    count=counter+1
+                    
+                    processed_text.close()
+        except FileNotFoundError as e:
+            print (e)
+##
     def normalize_and_append_to_outfile(_sentence,counter,file_name):  
         count=counter
         try:
