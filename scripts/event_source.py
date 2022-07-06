@@ -16,7 +16,7 @@ class EventSource:
     def __init__(self):
         pass
     
-    def extract_sentence(self, df,col_name, topic, prod, num_sentence = -1):
+    def extract_sentence(self, df,col_name, topic, prod, num_sentence = -1, os=[0,0]):
         """
         Args:
             df:
@@ -28,9 +28,12 @@ class EventSource:
         Returns: None
         """
         counter = 0
-        for i in range(len(df)):
+        offset = os[:]
+        i = 0
+        while(i < len(df)):
+            i = i + offset[0]
             articles = df.loc[i,col_name].split("።")
-            index = 0
+            index = offset[1]
             size = len(articles)
             while((counter != num_sentence) and (index < size)):
                 sentence = articles[index]
@@ -41,7 +44,9 @@ class EventSource:
                 prod.send(topic, sentence)
                 counter = counter+1
                 index = index+1
-
+            offset[1] = 0
+            offset[0] = 0
+            i = i+1
             if(counter == num_sentence):
                 break
         
