@@ -1,11 +1,31 @@
 import pandas as pd
 import re
-import os 
+import os   
+
+'''The following class will perform the following tasks:
+    - manage characetr mismaches
+    - Normalize words with lebels
+    - remove special charaters
+    - validate the sentence length
+    - generate a clear amharic texts with spacified sentence id
+'''
 
 class DataProcessor():
-
-     def __init__(self, filename):
+    
+    def __init__(self, filename):
         self.filename=filename
+    
+    def read_data (filename):
+        try:
+            data=pd.read_csv(filename)
+        except FileNotFoundError as e:
+            print (e)
+        return data
+    
+    def data_selector(df):
+        """To sub set dataframe"""
+        df=df [['headline','article']]
+        return df
 
     def normalize_char_level_missmatch(input_token):
         """Function that accepts tokens and lablize token to 
@@ -35,7 +55,7 @@ class DataProcessor():
         rep23=re.sub('[ጻ]','ፃ',rep22)
         rep24=re.sub('[ጼ]','ፄ',rep23)
         rep25=re.sub('[ጽ]','ፅ',rep24)
-        rep26=re.sub('[ጾ]','ፆ',rep25) 
+        rep26=re.sub('[ጾ]','ፆ',rep25)
         rep27=re.sub('(ሉ[ዋአ])','ሏ',rep26)
         rep28=re.sub('(ሙ[ዋአ])','ሟ',rep27)
         rep29=re.sub('(ቱ[ዋአ])','ቷ',rep28)
@@ -56,9 +76,20 @@ class DataProcessor():
         rep44=re.sub('(ጩ[ዋአ])','ጯ',rep43)
         rep45=re.sub('(ጹ[ዋአ])','ጿ',rep44)
         rep46=re.sub('(ፉ[ዋአ])','ፏ',rep45)
-        rep47=re.sub('[ቊ]','ቁ',rep46) #ቁ can be written as ቊ
-        rep48=re.sub('[ኵ]','ኩ',rep47) #ኩ can be also written as ኵ  
+        rep47=re.sub('[ቊ]','ቁ',rep46) 
+        rep48=re.sub('[ኵ]','ኩ',rep47)   
         
         return rep48
 
-    
+    def remove_punc_and_special_chars(text): 
+  
+        normalized_text = re.sub('[\–\►\!\@\#\$\%\^\«\»\&\*\(\)\…\[\]\{\}\;\“\”\›\’\‘\"\'\:\,\.\‹\/\<\>\?\\\\|\`\´\~\-\=\+\፡\።\፤\;\፦\፥\፧\፨\፠\፣]', '',text) 
+        return normalized_text
+
+  
+   
+
+if __name__=="__main__":
+    file = '../data/Amharic News Dataset.csv'  
+    processor_obj= DataProcessor(file)
+    processor_obj.preprocess_data()
