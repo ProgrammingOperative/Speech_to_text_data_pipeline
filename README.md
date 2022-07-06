@@ -45,7 +45,14 @@ Data can be found [here](https://github.com/IsraelAbebe/An-Amharic-News-Text-cla
 
 ## Authors
 
-👤 **Biniyam Belayneh**
+- 👤 **Biniyam Belayneh**
+- 👤 **Meron Abate**
+- 👤 **Tewodros Kaderaleh**
+- 👤 **Gezahegne Wondachew**
+- 👤 **Hewan Mulu**
+- 👤 **Titus Wachira**
+- 👤 **Amal Abdallah**
+
 
 
 ## Show your support
