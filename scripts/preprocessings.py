@@ -127,6 +127,27 @@ class DataProcessor():
             print(e)
         return count 
 
+
+    def preprocess_data (self):
+        data=DataProcessor.read_data(self.filename)
+        df=data[['headline','article']]
+        file_name="Clean_Amharic.txt"
+        counter=1
+        try: 
+            for data in df['article']:
+                sentences=re.compile('[!?።\፡\፡]+').split(data)
+                counter=DataProcessor.normalize_and_append_to_outfile(sentences,counter,file_name)
+        except Exception as e:
+            print (e)
+        try:
+            for data in df['headline']:
+                sentence= str(data)
+                DataProcessor.normalize_and_append_headline_to_outfile(sentence,counter,file_name)
+                counter=counter+1
+        except Exception as e:
+            print (e)
+
+            
 if __name__=="__main__":
     file = '../data/Amharic News Dataset.csv'  
     processor_obj= DataProcessor(file)
