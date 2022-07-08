@@ -16,7 +16,27 @@ class utils:
 
     def __init__(self):
         pass
+    
+    # create data loader.
+    def check_id(id, pro_df):
+        for i in range(len(pro_df)):
+            if(id == pro_df.loc[i,"Id"]):
+                return False
 
+        return True
+
+    def produce_text(self, df, pro_df, producer, topic, num=1000000, freq = 0.5):
+        
+        counter = 0
+        while (counter < len(df) and (counter < num)):
+            id = df.loc[counter,"Id"]
+            if (self.check_id(id, pro_df)):
+                text = df.loc[counter,"Text"]
+                data = [id, text]
+                producer.send(topic, data) 
+                #print(data)
+            counter = counter + 1
+            sleep(freq)
 
     def extract_sentences(df, col_name, id_len, char_limit):
         """
@@ -45,7 +65,6 @@ class utils:
         st_df['Text'] = texts
 
         return st_df
-
 
     def df_loader(self, folder, name):
         """
