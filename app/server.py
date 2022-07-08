@@ -33,6 +33,12 @@ def result():
     #print(request.data)  # raw data
     #print(request.json)  # json (if content-type of application/json is sent with the request)
     #print(request.get_json(force=True))  # json (if content-type of application/json is not sent)
+	audio = request.files['file'].stream.read()
+	text = request.files['text'].stream.read().decode('utf-8')
+	print(text)
+	with open('./audio.wav', 'wb') as f:
+		f.write(audio)
+	print('saved')
 	return {'Name':str(request.data)}
 	
 # Running app

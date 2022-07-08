@@ -5,7 +5,13 @@ import './App.css';
 
 function App() {
 
-  const [text, setText] = React.useState('')
+  const [text, setText] = React.useState(
+    {message: {
+      id: null,
+      text: null
+    }}
+  )
+  const [response, setResponse] = React.useState('tmp')
   const [recordedAudio, setRecordedAudio] = React.useState({
     audioDetails: {
       url: null,
@@ -25,16 +31,27 @@ function App() {
     setRecordedAudio({
       audioDetails: audio
     })
+    console.log(recordedAudio)
   }
 
   function handleAudioUpload(audio) {
-    console.log(data.duration)
+    
     const data = {
       text,
       audio
     }
-
-    console.log(data)
+    const str2blob = txt => new Blob([txt]);
+    var file = new FormData();
+    file.append('file', recordedAudio.audioDetails.blob, 'file');
+    file.append('text', str2blob(text.message.text), 'text');
+    fetch('/data2', {
+      method: 'POST',
+      mode: 'cors',
+      body: file
+    }).then(response => response.json()
+    ).then(json => {
+      console.log(json)
+    });
   }
 
   function handleReset() {
@@ -59,7 +76,7 @@ function App() {
         fetch("/data").then((res) =>
             res.json().then((data) => {
                 // Setting a data from api
-                setText(data.Data);
+                setText({message:{id:data.Data.id, text:data.Data.text}});
             })
         );
   }
@@ -70,7 +87,7 @@ function App() {
     // Code is executed when this page loads for the first time
     // get the text from kafka
     // setText
-    setText('This is the text from kafka')
+    setText({message:{id:-1, text:"null"}})
 
   }, []);
 
@@ -82,7 +99,7 @@ function App() {
 
       <div className='user-info'>
         <p>
-          {text}
+          {text.message.text}
         </p>
 
         <button className='btn' onClick={handleLoadAnotherText}>
