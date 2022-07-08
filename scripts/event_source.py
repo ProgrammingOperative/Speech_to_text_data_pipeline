@@ -50,18 +50,6 @@ class EventSource:
             if(counter == num_sentence):
                 break
         
-        
-    def json_serializer(self, x):
-        """
-        Args:
-            x:
-        
-        Returns: 
-            val: 
-        """
-        val = dumps(x).encode('utf-8')
-
-        return val
 
     
     def json_deserializer(self, x):
@@ -77,7 +65,7 @@ class EventSource:
         return val
     
     
-    def producer_init(self, server, serializer=None):
+    def producer_init(self, server):
         """
         Args:
             server:
@@ -87,7 +75,7 @@ class EventSource:
             producer:
         """
         producer = KafkaProducer(bootstrap_servers=server,
-                                 value_serializer=lambda x: serializer(x))
+                                 value_serializer=lambda x: dumps(x).encode('utf-8'))
         return producer
          
         
