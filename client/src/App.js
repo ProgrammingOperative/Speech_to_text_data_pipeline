@@ -28,6 +28,7 @@ function App() {
   }
 
   function handleAudioUpload(audio) {
+    console.log(data.duration)
     const data = {
       text,
       audio
@@ -72,12 +73,6 @@ function App() {
     setText('This is the text from kafka')
 
   }, []);
-
-
-
-
-
-
 
   return (
     <div className="container">
