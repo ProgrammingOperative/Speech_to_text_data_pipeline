@@ -52,18 +52,6 @@ class EventSource:
         
 
     
-    def json_deserializer(self, x):
-        """
-        Args:
-            x:
-            
-        Returns:
-            val: 
-        """
-        val = loads(x.decode('utf-8'))
-        
-        return val
-    
     
     def producer_init(self, server):
         """

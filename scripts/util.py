@@ -18,7 +18,7 @@ class utils:
         pass
 
 
-    def extract_sentence(df, col_name, id_len, char_limit):
+    def extract_sentences(df, col_name, id_len, char_limit):
         """
         Args:
             df:
@@ -88,15 +88,14 @@ class utils:
         return producer
 
     
-    def consumer_init(self, topic, server, offset = "latest", commit = False):
+    def consumer_init(self, topic, server = ['localhost:9092'], offset = "latest", commit = False):
         """
         Args:
-            topic:
-            server:
-            offset:
-            commit:
-            group:
-            deser:
+            topic: kafka topic
+            server: port and url of the server where the kafka is found
+            offset: the type of offset during reset (latest, or earliest)
+            commit: boolean to track processed items
+            group: name of group
         
         Returns:
             consumer:
