@@ -1,56 +1,105 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { Recorder } from 'react-voice-recorder'
+import 'react-voice-recorder/dist/index.css'
 import './App.css';
 
 function App() {
+
+  const [text, setText] = React.useState('')
+  const [recordedAudio, setRecordedAudio] = React.useState({
+    audioDetails: {
+      url: null,
+      blob: null,
+      chunks: null,
+      duration: {
+        h: null,
+        m: null,
+        s: null,
+      }
+    }
+  });
+
+
+
+  function handleAudioStop(audio) {
+    setRecordedAudio({
+      audioDetails: audio
+    })
+  }
+
+  function handleAudioUpload(audio) {
+    const data = {
+      text,
+      audio
+    }
+
+    console.log(data)
+  }
+
+  function handleReset() {
+    setRecordedAudio({
+      audioDetails: {
+        url: null,
+        blob: null,
+        chunks: null,
+        duration: {
+          h: null,
+          m: null,
+          s: null,
+        }
+      }
+    })
+  }
+
+  function handleLoadAnotherText() {
+    // send request to fetch a sentence
+    const text = 'This is another text';
+    setText(text);
+  }
+
+
+
+  React.useEffect(() => {
+    // Code is executed when this page loads for the first time
+    // get the text from kafka
+    // setText
+    setText('This is the text from kafka')
+
+  }, []);
+
+
+
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
+    <div className="container">
+      <nav className='nav-bar'>
+        <h3>Welcome to user page!</h3>
+      </nav>
+
+      <div className='user-info'>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {text}
         </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+
+        <div className='audo-recorder'>
+          <Recorder
+            record={true}
+            title={"Start recording the text above"}
+            audioURL={recordedAudio.audioDetails.url}
+            showUIAudio
+            handleAudioStop={audio => handleAudioStop(audio)}
+            // handleOnChange={(value) => handleOnChange(value, 'firstname')}
+            handleAudioUpload={audio => handleAudioUpload(audio)}
+            handleReset={handleReset} />
+        </div>
+
+        <button className='btn' onClick={handleLoadAnotherText}>
+          Load another text
+        </button>
+      </div>
     </div>
   );
 }
