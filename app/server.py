@@ -5,12 +5,14 @@ from kafka import KafkaConsumer
 from json import loads  
 from json import dumps
 from flask_cors import CORS
+from kafka import KafkaProducer
 
 x = datetime.datetime.now()
 
 # Initializing flask app
 app = Flask(__name__)
 CORS(app)
+
 def load_text(topic_name, server):
 	consumer = KafkaConsumer(topic_name,
 							bootstrap_servers=server,
@@ -21,6 +23,11 @@ def load_text(topic_name, server):
 	
 	for message in consumer:
 		return message.value
+
+def send_meta(topic_name, server, meta):
+	producer = KafkaProducer(bootstrap_servers=server,
+                                 value_serializer=lambda x: dumps(x).encode('utf-8'))
+	producer.send(topic_name, meta)
 
 # Route for seeing a data
 @app.route('/data')
@@ -35,8 +42,14 @@ def result():
     #print(request.get_json(force=True))  # json (if content-type of application/json is not sent)
 	audio = request.files['file'].stream.read()
 	text = request.files['text'].stream.read().decode('utf-8')
-	print(text)
-	with open('./audio.wav', 'wb') as f:
+	id = request.files['id'].stream.read().decode('utf-8')
+	audio_url = f"/mnt/10ac-batch-5/week9/reiten/unprocessed/{id}.wav"
+	meta = {"id":id, "text":text, "url":audio_url }
+	
+	send_meta("audio_exp8", ['localhost:9092'], meta)
+	
+	print(text, id)
+	with open(audio_url, 'wb') as f:
 		f.write(audio)
 	print('saved')
 	return {'Name':str(request.data)}

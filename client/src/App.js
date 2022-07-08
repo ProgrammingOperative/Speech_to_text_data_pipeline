@@ -44,6 +44,7 @@ function App() {
     var file = new FormData();
     file.append('file', recordedAudio.audioDetails.blob, 'file');
     file.append('text', str2blob(text.message.text), 'text');
+    file.append('id', str2blob(text.message.id), 'id');
     fetch('/data2', {
       method: 'POST',
       mode: 'cors',
