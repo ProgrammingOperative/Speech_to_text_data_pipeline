@@ -53,8 +53,14 @@ function App() {
 
   function handleLoadAnotherText() {
     // send request to fetch a sentence
-    const text = 'This is another text';
-    setText(text);
+     // Using fetch to fetch the api from 
+        // flask server it will be redirected to proxy
+        fetch("/data").then((res) =>
+            res.json().then((data) => {
+                // Setting a data from api
+                setText(data.Data);
+            })
+        );
   }
 
 

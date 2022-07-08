@@ -4,11 +4,13 @@ import datetime
 from kafka import KafkaConsumer
 from json import loads  
 from json import dumps
+from flask_cors import CORS
 
 x = datetime.datetime.now()
 
 # Initializing flask app
 app = Flask(__name__)
+CORS(app)
 def load_text(topic_name, server):
 	consumer = KafkaConsumer(topic_name,
 							bootstrap_servers=server,
@@ -25,7 +27,7 @@ def load_text(topic_name, server):
 def get_text():
 	resultdd = load_text("audio_exp5", ['localhost:9092'])
 	# Returning an api for showing in reactjs
-	return {'Name': str(resultdd)}
+	return {"Data": resultdd}
 @app.route('/data2', methods=['POST'])
 def result():
     #print(request.data)  # raw data
