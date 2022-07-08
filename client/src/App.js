@@ -84,6 +84,9 @@ function App() {
           {text}
         </p>
 
+        <button className='btn' onClick={handleLoadAnotherText}>
+          Load another text
+        </button>
         <div className='audo-recorder'>
           <Recorder
             record={true}
@@ -95,10 +98,6 @@ function App() {
             handleAudioUpload={audio => handleAudioUpload(audio)}
             handleReset={handleReset} />
         </div>
-
-        <button className='btn' onClick={handleLoadAnotherText}>
-          Load another text
-        </button>
       </div>
     </div>
   );
