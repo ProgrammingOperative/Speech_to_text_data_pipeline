@@ -138,3 +138,15 @@ class EventSource:
         message = admin_client.create_topics(new_topics=topic_list, validate_only=False)
         
         return message
+
+
+    def load_text(self, topic_name, server):
+        consumer = KafkaConsumer(topic_name,
+                                bootstrap_servers=server,
+                                auto_offset_reset='latest',
+                                enable_auto_commit=False,
+                                value_deserializer=lambda x: loads(x.decode('utf-8')))
+
+        
+        for message in consumer:
+            return message.value
