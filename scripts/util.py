@@ -260,3 +260,16 @@ class Utils:
         logger.info("new column successfully added: Duration")
 
         return df
+
+
+    def change_rate(self, audio, sr):
+        """
+        audio: a list that contains audio sample and rate
+        sr: new sampling rate to be applied
+        return: resampled audio array with sampling rate
+        """
+        resampled = librosa.resample(audio[0], orig_sr=audio[1], target_sr=sr)
+        
+        logger.info("rate changed")
+        
+        return [resampled, sr]

@@ -3,7 +3,7 @@ import os
 
 sys.path.append(os.path.abspath("."))
 from util import Utils
-util = Utils()
+util = Utils("../logs/text_producer.logs")
 
 def main():
     # load cleaned sentences
