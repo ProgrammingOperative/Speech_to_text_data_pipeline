@@ -10,12 +10,42 @@ from json import loads
 from kafka.admin import KafkaAdminClient, NewTopic
 import pandas as pd
 import numpy as np
+import wave
+import codecs
+from tqdm import tqdm
+import array
+import json
+import audioop
+import soundfile as sf
+import librosa  # for audio processing
+import librosa.display
+import logging
+import soundfile as sf
+import pandas as pd
+import numpy as np
+# from regex import D
+import sys
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# importing scripts
+sys.path.insert(1, '..')
+sys.path.append("..")
+sys.path.append(".")
 
 
 class Utils:
 
-    def __init__(self):
-        pass
+    def __init__(self, filehandler):
+        """
+        initilize logger
+        """
+        file_handler = logging.FileHandler(filehandler)
+        formatter = logging.Formatter(
+            "time: %(asctime)s, function: %(funcName)s, module: %(name)s, message: %(message)s \n")
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
     
     # create data loader.
     def check_id(self, id, pro_df):
@@ -43,7 +73,7 @@ class Utils:
                 text = df.loc[counter,"Text"]
                 data = [id, text]
                 producer.send(topic, data)
-                
+
             counter = counter + 1
             sleep(freq)
 
@@ -161,3 +191,72 @@ class Utils:
         message = admin_client.create_topics(new_topics=topic_list, validate_only=False)
         
         return message
+
+    def load_audio(self, path):
+        """
+        path: path to audio file to be loadded
+        return: array of audio samples and sampling rate.
+        """
+        samples, sample_rate = librosa.load(path, sr=None, mono=False)
+        
+        return [samples, sample_rate]
+
+    def save_audio(self, audio, path):
+        """
+        audio: a list that contains audio sample and rate
+        path: location and name of new file
+        """
+        
+        if(len(audio[0])==2):
+            with sf.SoundFile(path, 'w', audio[1], 2, 'PCM_24') as f:
+                f.write(np.transpose(audio[0]))
+        else:
+            sf.write(path, audio[0], audio[1])
+
+
+    def add_channel_count(self, df, output=False):
+        """
+        It identifies number of channels in the audio files
+        and adds a new column with the identified number
+        """
+        n_list = []
+        if(output):
+            col = "Output"
+        else:
+            col = "Feature"
+        for i in range(df.shape[0]):
+            try:
+                data = wave.open(df.loc[i, col], mode='rb')
+            except:
+                n_list.append(400)  # 400 means the data is missing
+                continue
+            channel = data.getparams().nchannels
+            n_list.append(channel)
+        df["n_channel"] = n_list
+
+        logger.info("new column successfully added: channels count")
+
+        return df
+
+    
+    def add_duration(self, df, output=False):
+        d_list = []
+        if(output):
+            col = "Output"
+        else:
+            col = "Feature"
+        for i in range(df.shape[0]):
+            try:
+                data = wave.open(df.loc[i, col], mode='rb')
+            except:
+                d_list.append(400)  # 400 means the data is missing
+                continue
+            frames = data.getnframes()
+            rate = data.getframerate()
+            duration = frames / float(rate)
+            d_list.append(duration)
+        df["Duration"] = d_list
+
+        logger.info("new column successfully added: Duration")
+
+        return df
