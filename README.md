@@ -1,15 +1,13 @@
 # Speech_to_text_data_pipeline
 
-<img src="https://github.com/Reiten-10Academy/Speech_to_text_data_pipeline/blob/main/images/ETL.jpg"/>
+<img src="https://github.com/Reiten-10Academy/Speech_to_text_data_pipeline/blob/main/extra/images/ETL.jpg"/>
 
 **Table of content**
 
 - [Overview](#overview)
 - [Install](#install)
 - [Data](#data)
-- [Notebooks](#notebooks)
-- [Scripts](#scripts)
-- [Test](#tests)
+- [Folders](#notebooks)
 
 ## Overview
 
@@ -31,17 +29,11 @@ Data can be found [here](https://github.com/IsraelAbebe/An-Amharic-News-Text-cla
 
      Amharic news text classification dataset with baseline performance dataset: 
 
-## Notebooks
+## folders
 
-> All the analysis and examples of implementation will be here in the form of .ipynb file
-
-## Scripts
-
-> All the modules for the analysis are found here
-
-## Tests
-
-> All the unit and integration tests are found here
+> - backend: a flask server and a bunch of python scripts that process data in pipeline 
+> - frontend: a react application.
+> - extra: contains, notebooks, docs, and other development and testing files.
 
 ## Authors
 
