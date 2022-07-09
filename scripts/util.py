@@ -12,17 +12,20 @@ import pandas as pd
 import numpy as np
 
 
-class utils:
+class Utils:
 
     def __init__(self):
         pass
     
     # create data loader.
-    def check_id(id, pro_df):
-        for i in range(len(pro_df)):
-            if(id == pro_df.loc[i,"Id"]):
-                return False
-
+    def check_id(self, id, pro_df):
+        try:
+            for i in range(len(pro_df)):
+                if(id == pro_df.loc[i,"Id"]):
+                    return False
+        except:
+            pass
+        
         return True
 
     def produce_text(self, df, pro_df, producer, topic, num=1000000, freq = 0.5):
@@ -38,10 +41,10 @@ class utils:
             counter = counter + 1
             sleep(freq)
 
-    def extract_sentences(df, col_name, id_len, char_limit):
+    def extract_sentences(self, df, id_len = 6, char_limit = 150):
         """
         Args:
-            df:
+            df: original dataframe
             col_name:
             id_len:
             char_limit:
@@ -54,7 +57,7 @@ class utils:
         ids = []
             
         for i in range(len(df)):
-            articles = df.loc[i,col_name].split("።")
+            articles = df.loc[i,"article"].split("።")
             for text in articles:
                 if(len(text) < char_limit):
                     texts.append(text)
