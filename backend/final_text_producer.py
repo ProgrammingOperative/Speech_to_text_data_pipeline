@@ -1,14 +1,14 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath("."))
+sys.path.append(os.path.abspath("./scripts/"))
 from util import Utils
 util = Utils("../logs/text_producer.logs")
 
 def main():
     # load cleaned sentences
     clean_set = util.df_loader("interim", "clean_set.csv")
-    
+    print(clean_set.shape)
     # kafka producer initialization
     producer = util.producer_init()
     
@@ -18,5 +18,5 @@ def main():
     except:
         util.produce_text(clean_set, producer, "unprocessed")
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     main()

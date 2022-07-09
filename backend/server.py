@@ -32,7 +32,8 @@ def send_meta(topic_name, server, meta):
 # Route for seeing a data
 @app.route('/data')
 def get_text():
-	resultdd = load_text("audio_exp5", ['localhost:9092'])
+	resultdd = load_text("unprocessed", ['localhost:9092'])
+	print(resultdd)
 	# Returning an api for showing in reactjs
 	return {"Data": resultdd}
 @app.route('/data2', methods=['POST'])
@@ -46,7 +47,7 @@ def result():
 	audio_url = f"/mnt/10ac-batch-5/week9/reiten/unprocessed/{id}.wav"
 	meta = {"id":id, "text":text, "url":audio_url }
 	
-	send_meta("audio_exp8", ['localhost:9092'], meta)
+	send_meta("processed", ['localhost:9092'], meta)
 	
 	print(text, id)
 	with open(audio_url, 'wb') as f:

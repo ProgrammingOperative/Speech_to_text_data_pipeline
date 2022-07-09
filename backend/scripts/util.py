@@ -58,21 +58,22 @@ class Utils:
 
         return True
 
-    def produce_text(self, df, producer, topic, pro_df = None,  num=1000000, freq = 0.5):
-        
+    def produce_text(self, df, producer, topic, pro_df = None,  num=1000000, freq = 2):
+        print("producer")
         counter = 0
         while (counter < len(df) and (counter < num)):
             id = df.loc[counter,"Id"]
             if pro_df is not None:
                 if (self.check_id(id, pro_df)):
                     text = df.loc[counter,"Text"]
-                    data = [id, text]
+                    data = [str(id), text]
                     producer.send(topic, data) 
-                    #print(data)
+                    print(data)
             else:
                 text = df.loc[counter,"Text"]
-                data = [id, text]
+                data = [str(id), text]
                 producer.send(topic, data)
+                print(data)
 
             counter = counter + 1
             sleep(freq)
@@ -97,7 +98,7 @@ class Utils:
             for text in articles:
                 if(len(text) < char_limit):
                     texts.append(text)
-                    ids.append("0"*(id_len-(len(str(id))))+str(id))
+                    ids.append("audio"+("0"*(id_len-(len(str(id)))))+str(id))
                     id = id+1
 
         st_df['Id'] = ids
