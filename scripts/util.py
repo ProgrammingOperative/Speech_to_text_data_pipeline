@@ -214,16 +214,12 @@ class Utils:
             sf.write(path, audio[0], audio[1])
 
 
-    def add_channel_count(self, df, output=False):
+    def add_channel_count(self, df, col):
         """
         It identifies number of channels in the audio files
         and adds a new column with the identified number
         """
         n_list = []
-        if(output):
-            col = "Output"
-        else:
-            col = "Feature"
         for i in range(df.shape[0]):
             try:
                 data = wave.open(df.loc[i, col], mode='rb')
@@ -232,19 +228,15 @@ class Utils:
                 continue
             channel = data.getparams().nchannels
             n_list.append(channel)
-        df["n_channel"] = n_list
+        df["Number_of_channels"] = n_list
 
         logger.info("new column successfully added: channels count")
 
         return df
 
     
-    def add_duration(self, df, output=False):
+    def add_duration(self, df, col):
         d_list = []
-        if(output):
-            col = "Output"
-        else:
-            col = "Feature"
         for i in range(df.shape[0]):
             try:
                 data = wave.open(df.loc[i, col], mode='rb')

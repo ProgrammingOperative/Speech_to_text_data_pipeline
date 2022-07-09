@@ -14,7 +14,7 @@ def main():
             try:
                 df = util.df_loader("interim", "kafka_set.csv")
             except:
-                df = pd.DataFrame(columns = ['Id', 'Text'])
+                df = pd.DataFrame(columns = ['Id', 'Text', 'Url'])
             row = pd.Series(message)
             df.append(row, ignore_index=True)
             util.df_saver(df, "interim", "kafka_set.csv")
