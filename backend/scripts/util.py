@@ -163,6 +163,7 @@ class Utils:
                                  bootstrap_servers=server,
                                  auto_offset_reset=offset,
                                  enable_auto_commit=commit,
+                                 consumer_timeout_ms = 20000,
                                  value_deserializer=lambda x: loads(x.decode('utf-8')))
 
         return consumer
