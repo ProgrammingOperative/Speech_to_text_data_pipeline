@@ -52,7 +52,6 @@ class EventSource:
         
 
     
-    
     def producer_init(self, server):
         """
         Args:
