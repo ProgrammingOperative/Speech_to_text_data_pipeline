@@ -1,9 +1,9 @@
 import sys
 import os
 
-sys.path.append(os.path.abspath("."))
+sys.path.append(os.path.abspath("./scripts/"))
 from util import Utils
-util = Utils("../logs/final_audio.log")
+util = Utils("./logs/final_audio.log")
 
 URL = "/mnt/10ac-batch-5/week9/reiten/processed/audio/"
 def main():

@@ -2,9 +2,9 @@ import sys
 import os
 import pandas as pd
 
-sys.path.append(os.path.abspath("."))
+sys.path.append(os.path.abspath("./scripts/"))
 from util import Utils
-util = Utils("../logs/text_saver.log")
+util = Utils("./logs/text_saver.log")
 
 def main():
     try:
