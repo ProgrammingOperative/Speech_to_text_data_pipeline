@@ -88,24 +88,25 @@ function App() {
     // Code is executed when this page loads for the first time
     // get the text from kafka
     // setText
-    setText({message:{id:-1, text:"null"}})
+    setText({message:{id:-1, text:"እባክዎን ጽሑፎችን ለማውረድ ከታች ያለውን ቁልፍ ይጫኑ"}})
 
   }, []);
 
   return (
     <div className="container">
       <nav className='nav-bar'>
-        <h3>Welcome to user page!</h3>
+        <h3>እንኳን ወደ ተጠቃሚ ገጽ በደህና መጡ!</h3>
       </nav>
 
       <div className='user-info'>
-        <p>
-          {text.message.text}
-        </p>
-
-        <button className='btn' onClick={handleLoadAnotherText}>
+        <p className='getText'>
+          <div>{text.message.text}</div>
+          <button className='btn' onClick={handleLoadAnotherText}>
           Load another text
         </button>
+        </p>
+
+        
         <div className='audo-recorder'>
           <Recorder
             record={true}
