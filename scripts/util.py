@@ -25,19 +25,25 @@ class Utils:
                     return False
         except:
             pass
-        
+
         return True
 
-    def produce_text(self, df, pro_df, producer, topic, num=1000000, freq = 0.5):
+    def produce_text(self, df, producer, topic, pro_df = None,  num=1000000, freq = 0.5):
         
         counter = 0
         while (counter < len(df) and (counter < num)):
             id = df.loc[counter,"Id"]
-            if (self.check_id(id, pro_df)):
+            if pro_df is not None:
+                if (self.check_id(id, pro_df)):
+                    text = df.loc[counter,"Text"]
+                    data = [id, text]
+                    producer.send(topic, data) 
+                    #print(data)
+            else:
                 text = df.loc[counter,"Text"]
                 data = [id, text]
-                producer.send(topic, data) 
-                #print(data)
+                producer.send(topic, data)
+                
             counter = counter + 1
             sleep(freq)
 
