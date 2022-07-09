@@ -11,7 +11,7 @@ def main():
         meta = util.df_loader("interim", "kafka_set.csv")
         meta = util.add_duration(meta, "Url")
         meta = util.add_channel_count(meta, "Url")
-    
+        util.df_saver(meta, "processed", "final_set.csv")
         for i in range(len(meta)):
             try:
                 sam, rat = util.load_audio(meta.loc[i, "Url"])
@@ -22,3 +22,6 @@ def main():
             util.save_audio(audio, path)
     except:
         pass
+
+if __name__ == "__main__":
+    main()

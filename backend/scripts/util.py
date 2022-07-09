@@ -224,11 +224,13 @@ class Utils:
         n_list = []
         for i in range(df.shape[0]):
             try:
-                data = wave.open(df.loc[i, col], mode='rb')
+                #data = wave.open(df.loc[i, col], mode='rb')
+                sample, sampler = self.load_audio(df.loc[i,col])
             except:
                 n_list.append(400)  # 400 means the data is missing
                 continue
-            channel = data.getparams().nchannels
+            print(sample.shape)
+            channel = sample.shape
             n_list.append(channel)
         df["Number_of_channels"] = n_list
 
@@ -242,6 +244,7 @@ class Utils:
         for i in range(df.shape[0]):
             try:
                 data = wave.open(df.loc[i, col], mode='rb')
+                print(data.getnchannels)
             except:
                 d_list.append(400)  # 400 means the data is missing
                 continue

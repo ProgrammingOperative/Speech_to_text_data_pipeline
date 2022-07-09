@@ -12,5 +12,5 @@ def main():
     util.df_saver(df, "interim", "clean_set.csv")
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     main()
