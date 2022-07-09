@@ -1,0 +1,47 @@
+name: CML Report
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: iterative/setup-cml@v1
+      - name: Metrics
+
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |    
+          if [ -e screenshoots/reports/1_webpage_loaded.png ]
+          then
+            echo "# Webpage loaded" >> report.md
+            cml publish screenshoots/reports/1_webpage_loaded.png --md >> report.md
+          fi
+          if [ -e screenshoots/reports/2_load_text.png ]
+          then
+            echo "# Fetch new text " >> report.md
+            cml publish screenshoots/reports/2_load_text.png --md >> report.md
+          fi
+          if [ -e screenshoots/reports/3_start_record.png ]
+          then
+            echo "# Start Recording" >> report.md
+            cml publish screenshoots/reports/3_start_record.png --md >> report.md
+          fi
+          if [ -e screenshoots/reports/4_stop_record.png ]
+          then
+            echo "# Stop Recording" >> report.md
+            cml publish screenshoots/reports/4_stop_record.png --md >> report.md
+          fi
+          if [ -e screenshoots/reports/5_play_record.png ]
+          then
+            echo "# Play Recording" >> report.md
+            cml publish screenshoots/reports/5_play_record.png --md >> report.md
+          fi
+          if [ -e screenshoots/reports/6_upload_record.png ]
+          then
+            echo "# Stop Recording" >> report.md
+            cml publish screenshoots/reports/6_upload_record.png --md >> report.md
+          fi
+          
+          
+          cml send-comment report.md
