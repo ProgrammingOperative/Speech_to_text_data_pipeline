@@ -12,35 +12,35 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |    
-          if [ -e screenshoots/reports/1_webpage_loaded.png ]
+          if [ -e extra/screenshoots/reports/1_webpage_loaded.png ]
           then
             echo "# Webpage loaded" >> report.md
-            cml publish screenshoots/reports/1_webpage_loaded.png --md >> report.md
+            cml publish extra/screenshoots/reports/1_webpage_loaded.png --md >> report.md
           fi
-          if [ -e screenshoots/reports/2_load_text.png ]
+          if [ -e extra/screenshoots/reports/2_load_text.png ]
           then
             echo "# Fetch new text " >> report.md
-            cml publish screenshoots/reports/2_load_text.png --md >> report.md
+            cml publish extra/screenshoots/reports/2_load_text.png --md >> report.md
           fi
-          if [ -e screenshoots/reports/3_start_record.png ]
+          if [ -e extra/screenshoots/reports/3_start_record.png ]
           then
             echo "# Start Recording" >> report.md
-            cml publish screenshoots/reports/3_start_record.png --md >> report.md
+            cml publish extra/screenshoots/reports/3_start_record.png --md >> report.md
           fi
-          if [ -e screenshoots/reports/4_stop_record.png ]
+          if [ -e extra/screenshoots/reports/4_stop_record.png ]
           then
             echo "# Stop Recording" >> report.md
-            cml publish screenshoots/reports/4_stop_record.png --md >> report.md
+            cml publish extra/screenshoots/reports/4_stop_record.png --md >> report.md
           fi
-          if [ -e screenshoots/reports/5_play_record.png ]
+          if [ -e extra/screenshoots/reports/5_play_record.png ]
           then
             echo "# Play Recording" >> report.md
-            cml publish screenshoots/reports/5_play_record.png --md >> report.md
+            cml publish extra/screenshoots/reports/5_play_record.png --md >> report.md
           fi
-          if [ -e screenshoots/reports/6_upload_record.png ]
+          if [ -e extra/screenshoots/reports/6_upload_record.png ]
           then
             echo "# Stop Recording" >> report.md
-            cml publish screenshoots/reports/6_upload_record.png --md >> report.md
+            cml publish extra/screenshoots/reports/6_upload_record.png --md >> report.md
           fi
           
           
