@@ -102,15 +102,15 @@ function App() {
         <p className='getText'>
           <div>{text.message.text}</div>
           <button className='btn' onClick={handleLoadAnotherText}>
-          Load another text
+          ጽሑፉን አውርድ
         </button>
         </p>
 
         
         <div className='audo-recorder'>
-          <Recorder
+          <Recorder 
             record={true}
-            title={"Start recording the text above"}
+            title={"ከላይ ያለውን ጽሑፍ ከታች መቅዳት ይጀምሩ"}
             audioURL={recordedAudio.audioDetails.url}
             showUIAudio
             handleAudioStop={audio => handleAudioStop(audio)}

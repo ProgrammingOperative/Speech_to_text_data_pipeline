@@ -41,13 +41,15 @@ color: white
 .user-info {
   width: 80%;
   display: flex;
+  background-color: #eee;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .user-info p {
 font-size: 20px;
-margin-bottom: 40px;
+margin-bottom: 0px;
 font-weight: bold;
 color: #3c3c3c
 
@@ -70,12 +72,11 @@ transition: .3s ease all;
 }
 
 .audio-recorder {
-  width: 500px;
-
+  width: 400px;
 }
 
 .btn:disabled {
-  background-color: #ccc;
+  background-color: #185fec;
   color: #333;
   cursor: not-allowed;
 }
