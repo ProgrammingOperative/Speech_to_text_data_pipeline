@@ -77,7 +77,8 @@ function App() {
         fetch("/data").then((res) =>
             res.json().then((data) => {
                 // Setting a data from api
-                setText({message:{id:data.Data.id, text:data.Data.text}});
+                console.log(data.Data)
+                setText({message:{id:data.Data[0], text:data.Data[1]}});
             })
         );
   }
@@ -88,14 +89,14 @@ function App() {
     // Code is executed when this page loads for the first time
     // get the text from kafka
     // setText
-    setText({message:{id:-1, text:"እባክዎን ጽሑፎችን ለማውረድ ከታች ያለውን ቁልፍ ይጫኑ"}})
+    setText({message:{id:-1, text:"እባክዎን ጽሑፎችን ለማውረድ ከታች ያለውን ቁልፍ ይጫኑ \n (please press the button to load)"}})
 
   }, []);
 
   return (
     <div className="container">
       <nav className='nav-bar'>
-        <h3>እንኳን ወደ ተጠቃሚ ገጽ በደህና መጡ!</h3>
+        <h3>እንኳን ወደ ተጠቃሚ ገጽ በደህና መጡ! (welcome)</h3>
       </nav>
 
       <div className='user-info'>
@@ -110,7 +111,7 @@ function App() {
         <div className='audo-recorder'>
           <Recorder 
             record={true}
-            title={"ከላይ ያለውን ጽሑፍ ከታች መቅዳት ይጀምሩ"}
+            title={"ከላይ ያለውን ጽሑፍ ከታች መቅዳት ይጀምሩ  (please start recording for the above text) "}
             audioURL={recordedAudio.audioDetails.url}
             showUIAudio
             handleAudioStop={audio => handleAudioStop(audio)}
